@@ -1,12 +1,13 @@
 package com.ia.backend.services;
 
+import com.ia.backend.dtos.LoginRequest;
+import com.ia.backend.dtos.LoginResponse;
 import com.ia.backend.dtos.RegisterRequest;
 import com.ia.backend.entities.User;
 import com.ia.backend.exceptions.EmailAlreadyExistsException;
 import com.ia.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,5 +34,17 @@ public class AuthService {
         userRepository.save(newUser);
 
         return "User registered successfully";
+    }
+
+    @Transactional
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new BadCredentialsException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new BadCredentialsException("Invalid email or password");
+        }
+
+        return new LoginResponse("token");
     }
 }
