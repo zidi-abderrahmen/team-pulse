@@ -1,7 +1,8 @@
 package com.ia.backend.controllers;
 
+import com.ia.backend.dtos.LoginRequest;
+import com.ia.backend.dtos.LoginResponse;
 import com.ia.backend.dtos.RegisterRequest;
-import com.ia.backend.entities.User;
 import com.ia.backend.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,10 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "message", authService.register(request)
         ));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 }

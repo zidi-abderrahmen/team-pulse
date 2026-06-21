@@ -18,6 +18,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Transactional
     public String register(RegisterRequest request) {
@@ -45,6 +46,8 @@ public class AuthService {
             throw new BadCredentialsException("Invalid email or password");
         }
 
-        return new LoginResponse("token");
+        return new LoginResponse(
+                jwtService.generateToken(user.getEmail())
+        );
     }
 }
