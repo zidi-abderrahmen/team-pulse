@@ -1,5 +1,6 @@
 package com.ia.backend.services;
 
+import com.ia.backend.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -25,9 +26,12 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    public String generateToken(String username) {
+    public String generateToken(User user) {
         Map<String, Object> extraClaims = new HashMap<>();
-        return createToken(extraClaims, username);
+        extraClaims.put("id", user.getId());
+        extraClaims.put("name", user.getName());
+        extraClaims.put("role", user.getRole().toString());
+        return createToken(extraClaims, user.getEmail());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
@@ -38,6 +42,18 @@ public class JwtService {
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())
                 .compact();
+    }
+
+    public String extractId(String token) {
+        return extractClaim(token, claims -> claims.get("id", String.class));
+    }
+
+    public String extractName(String token) {
+        return extractClaim(token, claims -> claims.get("name", String.class));
+    }
+
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> claims.get("role", String.class));
     }
 
     public String extractUsername(String token) {
