@@ -3,8 +3,10 @@ package com.ia.backend.services;
 import com.ia.backend.dtos.LoginRequest;
 import com.ia.backend.dtos.LoginResponse;
 import com.ia.backend.dtos.RegisterRequest;
+import com.ia.backend.dtos.UserResponse;
 import com.ia.backend.entities.User;
 import com.ia.backend.exceptions.EmailAlreadyExistsException;
+import com.ia.backend.mappers.UserMapper;
 import com.ia.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,9 +21,10 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final UserMapper userMapper;
 
     @Transactional
-    public String register(RegisterRequest request) {
+    public UserResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.email())) {
             throw new EmailAlreadyExistsException("Email already in use");
         }
@@ -34,7 +37,7 @@ public class AuthService {
 
         userRepository.save(newUser);
 
-        return "User registered successfully";
+        return userMapper.toDTO(newUser);
     }
 
     @Transactional
@@ -47,7 +50,8 @@ public class AuthService {
         }
 
         return new LoginResponse(
-                jwtService.generateToken(user.getEmail())
+                jwtService.generateToken(user.getEmail()),
+                userMapper.toDTO(user)
         );
     }
 }
