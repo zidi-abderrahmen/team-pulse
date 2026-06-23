@@ -31,7 +31,8 @@ public class TaskController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MEMBER')")
     public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
-        return ResponseEntity.ok(taskService.getTaskById(id));
+        User currentUser = SecurityUtils.getCurrentUser();
+        return ResponseEntity.ok(taskService.getTaskById(id, currentUser));
     }
 
     @PostMapping
@@ -47,7 +48,7 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getTasksByAssignedTo(currentUser));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}/status")
     @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<TaskResponse> updateTask(@PathVariable Long id, @Valid @RequestBody UpdateTaskRequest request) {
         User currentUser = SecurityUtils.getCurrentUser();

@@ -36,7 +36,11 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
-    public TaskResponse getTaskById(Long id) {
+    public TaskResponse getTaskById(Long id, User currentUser) {
+        if (currentUser.getRole() == Role.MEMBER) {
+            return taskMapper.toDTO(taskRepository.findByAssignedTo_IdAndId(currentUser.getId(), id)
+                    .orElseThrow(() -> new NotFoundException("Task not found with id: '" + id + "' and assigned to member with id: '" + currentUser.getId() + "'")));
+        }
         return taskMapper.toDTO(taskRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task not found with id: " + id)));
     }
@@ -65,8 +69,6 @@ public class TaskService {
                 .orElseThrow(() -> new NotFoundException("Task not found with id: '" + taskId + "' and assigned to member with id: '" + currentUser.getId() + "'"));
 
         existingTask.setStatus(request.status());
-
-        taskRepository.save(existingTask);
 
         return taskMapper.toDTO(taskRepository.save(existingTask));
     }
