@@ -13,3 +13,9 @@ spring:
 jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_DURATION}
+
+super:
+  admin:
+    name: ${SUPER_ADMIN_NAME}
+    email: ${SUPER_ADMIN_EMAIL}
+    password: ${SUPER_ADMIN_PASSWORD}

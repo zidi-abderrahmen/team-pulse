@@ -20,19 +20,19 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
         return ResponseEntity.ok(taskService.getAllTasks());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MEMBER')")
     public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(request));
     }
