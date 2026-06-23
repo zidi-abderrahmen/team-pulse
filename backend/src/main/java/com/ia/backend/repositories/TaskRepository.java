@@ -13,4 +13,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     boolean existsByTitleAndAssignedTo_Id(String title, Long assignedToId);
 
     List<Task> findByAssignedTo_Id(Long assignedToId);
+
+    Optional<Task> findByAssignedTo_IdAndId(Long assignedToId, Long id);
 }

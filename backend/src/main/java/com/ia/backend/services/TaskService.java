@@ -2,6 +2,7 @@ package com.ia.backend.services;
 
 import com.ia.backend.dtos.TaskRequest;
 import com.ia.backend.dtos.TaskResponse;
+import com.ia.backend.dtos.UpdateTaskRequest;
 import com.ia.backend.entities.Task;
 import com.ia.backend.entities.User;
 import com.ia.backend.entities.enums.Role;
@@ -30,6 +31,11 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
+    public List<TaskResponse> getTasksByAssignedTo(User currentUser) {
+        return taskRepository.findByAssignedTo_Id(currentUser.getId()).stream().map(taskMapper::toDTO).toList();
+    }
+
+    @Transactional(readOnly = true)
     public TaskResponse getTaskById(Long id) {
         return taskMapper.toDTO(taskRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task not found with id: " + id)));
@@ -53,7 +59,15 @@ public class TaskService {
         return taskMapper.toDTO(taskRepository.save(newTask));
     }
 
-    public List<TaskResponse> getTasksByAssignedTo(User currentUser) {
-        return taskRepository.findByAssignedTo_Id(currentUser.getId()).stream().map(taskMapper::toDTO).toList();
+    @Transactional
+    public TaskResponse updateTask(Long taskId, User currentUser, UpdateTaskRequest request) {
+        Task existingTask = taskRepository.findByAssignedTo_IdAndId(currentUser.getId(), taskId)
+                .orElseThrow(() -> new NotFoundException("Task not found with id: '" + taskId + "' and assigned to member with id: '" + currentUser.getId() + "'"));
+
+        existingTask.setStatus(request.status());
+
+        taskRepository.save(existingTask);
+
+        return taskMapper.toDTO(taskRepository.save(existingTask));
     }
 }

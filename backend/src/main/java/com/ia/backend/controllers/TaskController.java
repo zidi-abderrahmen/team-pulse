@@ -3,6 +3,7 @@ package com.ia.backend.controllers;
 import com.ia.backend.configs.SecurityUtils;
 import com.ia.backend.dtos.TaskRequest;
 import com.ia.backend.dtos.TaskResponse;
+import com.ia.backend.dtos.UpdateTaskRequest;
 import com.ia.backend.entities.User;
 import com.ia.backend.services.TaskService;
 import jakarta.validation.Valid;
@@ -44,5 +45,12 @@ public class TaskController {
     public ResponseEntity<List<TaskResponse>> getTasksByAssignedTo() {
         User currentUser = SecurityUtils.getCurrentUser();
         return ResponseEntity.ok(taskService.getTasksByAssignedTo(currentUser));
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('MEMBER')")
+    public ResponseEntity<TaskResponse> updateTask(@PathVariable Long id, @Valid @RequestBody UpdateTaskRequest request) {
+        User currentUser = SecurityUtils.getCurrentUser();
+        return ResponseEntity.ok(taskService.updateTask(id, currentUser, request));
     }
 }
