@@ -5,7 +5,7 @@ import com.ia.backend.dtos.LoginResponse;
 import com.ia.backend.dtos.RegisterRequest;
 import com.ia.backend.dtos.UserResponse;
 import com.ia.backend.entities.User;
-import com.ia.backend.exceptions.EmailAlreadyExistsException;
+import com.ia.backend.exceptions.AlreadyExistsException;
 import com.ia.backend.mappers.UserMapper;
 import com.ia.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class AuthService {
     @Transactional
     public UserResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.email())) {
-            throw new EmailAlreadyExistsException("Email already in use");
+            throw new AlreadyExistsException("Email already in use");
         }
 
         User newUser = User.builder()
