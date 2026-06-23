@@ -1,7 +1,9 @@
 package com.ia.backend.controllers;
 
+import com.ia.backend.configs.SecurityUtils;
 import com.ia.backend.dtos.TaskRequest;
 import com.ia.backend.dtos.TaskResponse;
+import com.ia.backend.entities.User;
 import com.ia.backend.services.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +37,12 @@ public class TaskController {
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(request));
+    }
+
+    @GetMapping("/my-tasks")
+    @PreAuthorize("hasRole('MEMBER')")
+    public ResponseEntity<List<TaskResponse>> getTasksByAssignedTo() {
+        User currentUser = SecurityUtils.getCurrentUser();
+        return ResponseEntity.ok(taskService.getTasksByAssignedTo(currentUser));
     }
 }

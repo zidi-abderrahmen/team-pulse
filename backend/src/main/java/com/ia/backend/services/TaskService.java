@@ -52,4 +52,8 @@ public class TaskService {
 
         return taskMapper.toDTO(taskRepository.save(newTask));
     }
+
+    public List<TaskResponse> getTasksByAssignedTo(User currentUser) {
+        return taskRepository.findByAssignedTo_Id(currentUser.getId()).stream().map(taskMapper::toDTO).toList();
+    }
 }

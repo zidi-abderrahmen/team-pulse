@@ -44,8 +44,8 @@ public class JwtService {
                 .compact();
     }
 
-    public String extractId(String token) {
-        return extractClaim(token, claims -> claims.get("id", String.class));
+    public Long extractId(String token) {
+        return extractClaim(token, claims -> claims.get("id", Long.class));
     }
 
     public String extractName(String token) {
