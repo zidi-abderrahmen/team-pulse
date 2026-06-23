@@ -1,6 +1,7 @@
 package com.ia.backend.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record TaskRequest(
 
@@ -10,6 +11,6 @@ public record TaskRequest(
         @NotBlank(message = "Description cannot be blank")
         String description,
 
-        @NotBlank(message = "Assigned to cannot be blank")
+        @NotNull(message = "Assigned to cannot be null")
         Long assignedTo
 ) {}

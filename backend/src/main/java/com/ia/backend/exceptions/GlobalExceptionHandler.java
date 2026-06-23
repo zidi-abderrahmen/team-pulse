@@ -52,6 +52,6 @@ public class GlobalExceptionHandler {
         body.put("error", "Not found");
         body.put("message", ex.getMessage());
 
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 }

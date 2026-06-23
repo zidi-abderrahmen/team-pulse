@@ -4,6 +4,7 @@ import com.ia.backend.dtos.TaskRequest;
 import com.ia.backend.dtos.TaskResponse;
 import com.ia.backend.entities.Task;
 import com.ia.backend.entities.User;
+import com.ia.backend.entities.enums.Role;
 import com.ia.backend.exceptions.AlreadyExistsException;
 import com.ia.backend.exceptions.NotFoundException;
 import com.ia.backend.mappers.TaskMapper;
@@ -36,11 +37,11 @@ public class TaskService {
 
     @Transactional
     public TaskResponse createTask(TaskRequest request) {
-        User assignedUser = userRepository.findById(request.assignedTo())
-                .orElseThrow(() -> new NotFoundException("User not found with id: " + request.assignedTo()));
+        User assignedUser = userRepository.findByIdAndRole(request.assignedTo(), Role.MEMBER)
+                .orElseThrow(() -> new NotFoundException("Member not found with id: " + request.assignedTo()));
 
         if (taskRepository.existsByTitleAndAssignedTo_Id(request.title(), request.assignedTo())) {
-            throw new AlreadyExistsException("Task already exists with title: " + request.title() + " and assigned to: " + request.assignedTo());
+            throw new AlreadyExistsException("Task already exists with title: '" + request.title() + "' and assigned to member with id: '" + request.assignedTo() + "'");
         }
 
         Task newTask = Task.builder()
