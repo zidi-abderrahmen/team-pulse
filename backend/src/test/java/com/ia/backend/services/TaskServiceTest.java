@@ -61,7 +61,6 @@ public class TaskServiceTest {
 
     @Test
     public void createTask_shouldCreateTaskSuccessfully() {
-        // 1. ARRANGE
         TaskRequest request = new TaskRequest(
                 "Test Member Task",
                 "This is a test member task",
