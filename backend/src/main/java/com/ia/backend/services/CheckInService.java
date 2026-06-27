@@ -1,7 +1,7 @@
 package com.ia.backend.services;
 
-import com.ia.backend.dtos.CheckInRequest;
-import com.ia.backend.dtos.CheckInResponse;
+import com.ia.backend.dtos.checkin.CheckInRequest;
+import com.ia.backend.dtos.checkin.CheckInResponse;
 import com.ia.backend.entities.CheckIn;
 import com.ia.backend.entities.User;
 import com.ia.backend.entities.enums.Role;
@@ -41,7 +41,7 @@ public class CheckInService {
     @Transactional(readOnly = true)
     public List<CheckInResponse> getAllCheckInsOfMember(Long userId) {
         userRepository.findByIdAndRole(userId, Role.MEMBER)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("Member not found"));
 
         return checkInRepository
                 .findBySubmittedBy_IdOrderBySubmittedAtDesc(userId)

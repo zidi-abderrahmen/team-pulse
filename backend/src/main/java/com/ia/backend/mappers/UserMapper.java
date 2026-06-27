@@ -1,6 +1,6 @@
 package com.ia.backend.mappers;
 
-import com.ia.backend.dtos.UserResponse;
+import com.ia.backend.dtos.auth.UserResponse;
 import com.ia.backend.entities.User;
 import org.mapstruct.Mapper;
 

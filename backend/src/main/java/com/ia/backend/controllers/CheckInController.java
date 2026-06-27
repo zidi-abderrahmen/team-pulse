@@ -1,8 +1,8 @@
 package com.ia.backend.controllers;
 
 import com.ia.backend.configs.SecurityUtils;
-import com.ia.backend.dtos.CheckInRequest;
-import com.ia.backend.dtos.CheckInResponse;
+import com.ia.backend.dtos.checkin.CheckInRequest;
+import com.ia.backend.dtos.checkin.CheckInResponse;
 import com.ia.backend.entities.User;
 import com.ia.backend.services.CheckInService;
 import jakarta.validation.Valid;

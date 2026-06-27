@@ -1,4 +1,4 @@
-package com.ia.backend.dtos;
+package com.ia.backend.dtos.checkin;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -1,4 +1,6 @@
-package com.ia.backend.dtos;
+package com.ia.backend.dtos.checkin;
+
+import com.ia.backend.dtos.auth.UserResponse;
 
 import java.time.LocalDateTime;
 

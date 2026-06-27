@@ -1,4 +1,4 @@
-package com.ia.backend.dtos;
+package com.ia.backend.dtos.auth;
 
 import com.ia.backend.entities.enums.Role;
 

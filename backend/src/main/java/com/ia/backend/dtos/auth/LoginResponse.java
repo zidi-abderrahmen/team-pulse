@@ -1,4 +1,4 @@
-package com.ia.backend.dtos;
+package com.ia.backend.dtos.auth;
 
 public record LoginResponse(
 

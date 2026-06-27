@@ -1,9 +1,9 @@
 package com.ia.backend.services;
 
-import com.ia.backend.dtos.LoginRequest;
-import com.ia.backend.dtos.LoginResponse;
-import com.ia.backend.dtos.RegisterRequest;
-import com.ia.backend.dtos.UserResponse;
+import com.ia.backend.dtos.auth.LoginRequest;
+import com.ia.backend.dtos.auth.LoginResponse;
+import com.ia.backend.dtos.auth.RegisterRequest;
+import com.ia.backend.dtos.auth.UserResponse;
 import com.ia.backend.entities.User;
 import com.ia.backend.exceptions.AlreadyExistsException;
 import com.ia.backend.mappers.UserMapper;

@@ -1,9 +1,9 @@
 package com.ia.backend.controllers;
 
 import com.ia.backend.configs.SecurityUtils;
-import com.ia.backend.dtos.TaskRequest;
-import com.ia.backend.dtos.TaskResponse;
-import com.ia.backend.dtos.UpdateTaskRequest;
+import com.ia.backend.dtos.task.TaskRequest;
+import com.ia.backend.dtos.task.TaskResponse;
+import com.ia.backend.dtos.task.UpdateTaskRequest;
 import com.ia.backend.entities.User;
 import com.ia.backend.services.TaskService;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.ia.backend.dtos;
+package com.ia.backend.dtos.task;
 
 import com.ia.backend.entities.enums.Status;
 import jakarta.validation.constraints.NotNull;

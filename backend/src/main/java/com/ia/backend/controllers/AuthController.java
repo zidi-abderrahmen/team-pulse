@@ -1,9 +1,9 @@
 package com.ia.backend.controllers;
 
-import com.ia.backend.dtos.LoginRequest;
-import com.ia.backend.dtos.LoginResponse;
-import com.ia.backend.dtos.RegisterRequest;
-import com.ia.backend.dtos.UserResponse;
+import com.ia.backend.dtos.auth.LoginRequest;
+import com.ia.backend.dtos.auth.LoginResponse;
+import com.ia.backend.dtos.auth.RegisterRequest;
+import com.ia.backend.dtos.auth.UserResponse;
 import com.ia.backend.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
